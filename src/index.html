@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ARR</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="js/back.js">
+  </head>
+  <body>
+   <div class="container-fluid">
+
+    <div class="h4 text-center">Гидравлический расчёт труб фирмы «KAN-therm»</div>
+
+    <div class="row">
+      <div class="col p-1">Выберите тип трубопровода: </div>
+      <div class="col p-1">Скорость движения воды <br> W, м/с</div>
+      <div class="col p-1">Удельные потери давления <br> R<sub>уд</sub>, Па/м</div>
+    </div>
+
+   <form action="js/back.js">
+    <div class="row">
+      <div class="col">
+        <select name="pipes" id="pipes"  >
+          <option value="null"></option>
+          <option value="poliprop">Полипропилен</option>
+          <option value="polietil">Полиэтилен</option>
+          <option value="met">Металлополимер</option>
+       </select>
+       <div class="p-1">
+        <select name="diameter" id="diameter" >
+        </select> , мм
+      </div>
+      </div>
+      <div class="col" id="pipe.speed" ></div>
+      <div class="col" id="pipe.res"></div>
+    </div>
+
+    <div class="row">
+      <div class="col">Введите расход G(Кг/ч) = <input type="text" id="consumption" name="consumption" >
+      </div>
+    </div>
+
+    <div class="row align-items-center">
+      <div class="col"> <div class="d-flex justify-content-center"><input type="button" class="btn btn-primary m-3" value="Рассчитать" onclick="getPipesParameters()">
+      <input type="reset" class="btn btn-danger m-3" value="сбросить" ></div></div>
+    </div></form>
+
+  </div>
+
+  <script src="js/back.js"> </script>
+  <script>
+  let diameters = {
+    poliprop : ['', '16x2.7', '20x3.4', '25x4.2', '32x5.4', '40x6.7'],
+    polietil : ['', '12x2', '14x2', '18x2', '18x2.5', '25x3.5', '32x4.4', ],
+    met: ['', '14x2', '16x2', '20x2', '26x3', '32x3', '40x3.5']
+  };
+  let pipes = document.getElementById('pipes');
+  let diameter = document.querySelector('#diameter')
+  window.onload = selectPipes;
+  pipes.onchange = selectPipes;
+
+  function selectPipes(ev){
+    diameter.innerHTML = '';
+    let c = this.value || 'poliprop', o;
+    for(let i = 0; i < diameters[c].length; i++){
+      o = new Option(diameters[c][i], i, false,false);
+      diameter.add(o);
+    };
+  }
+  </script>
+  </body>
+</html>
+
